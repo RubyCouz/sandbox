@@ -12,23 +12,16 @@ class Produits extends CI_Controller {
      */
     public function home()
     {
-            $this->load->view('header');
-            $this->load->view('home');
-            $this->load->view('footer');
-        }
+        $this->load->view('header');
+        $this->load->view('home');
+        $this->load->view('footer');
+    }
 
     /**
      * affichage vue catalogue client
      */
     public function home_user()
     {
-//        $user_id = $this->session->userdata('id');
-//        $user_role = $this->session->userdata('role');
-//        $user_login = $this->session->userdata('login');
-//        $user_firstname = $this->session->userdata('firstname');
-//        $user_lastname = $this->session->userdata('lastname');
-//        $user_mail = $this->session->userdata('mail');
-//        var_dump($user_mail);
 
         // chargement du model "Prod_model"
         $this->load->model('Prod_model');
@@ -333,6 +326,109 @@ class Produits extends CI_Controller {
             $this->load->view('contact');
             $this->load->view('footer');
         }
+    }
+
+    public function cart()
+    {
+        $this->load->view('header');
+        $this->load->view('order');
+        $this->load->view('footer');
+    }
+
+    public function add_product_in_cart()
+    {
+
+        $data = $this->input->post();
+        var_dump($data);
+        $key = $this->input->post('pro_id');
+        var_dump($key);
+        if ($this->session->cart == null) // création du panier s'il n'existe pas	
+        {
+            $tab = array($key => $data);
+            var_dump($tab);
+            $this->session->cart = $tab;
+            redirect('Produits/home_user');
+        }
+        else //si le panier existe
+        {
+            $tab = $this->session->cart;
+            $sortie = false;
+            foreach ($tab as $produit) //on cherche si le produit existe déjà dans le panier
+            {
+                if ($produit['pro_id'] == $this->input->post('pro_id'))
+                {
+                    $sortie = true;
+                }
+            }
+            if ($sortie) //si le produit existe déjà, l'utilisateur est averti
+            {
+                $tab = $this->session->cart;
+                $tab[$key]['pro_qte'] += 1;
+                $this->session->cart = $tab;
+                redirect('Produits/home_user');
+            }
+            else
+            { //sinon le produit est ajouté dans le panier
+                $tab[$key] = $data;
+                $this->session->cart = $tab;
+                redirect('Produits/home_user');
+            }
+        }
+    }
+/**
+ * suppression d'un produit du panier dans le dropdown
+ */
+    public function del_product_in_cart()
+    {
+        $data = false;
+        if ($this->input->post())
+        {
+            $id = $this->input->post('del');
+            $tab = $this->session->cart;
+            unset($tab[$id]);
+            if (empty($tab))
+            {
+                $this->session->cart = null;
+            }
+            else
+            {
+                $this->session->cart = $tab;
+            }
+            $this->load->view('cart');
+        }
+        else
+        {
+            echo $data;
+        }
+
+    }
+    
+    /**
+     * suppression d'un produit dans le panier en affichage complet
+     */
+    public function del_product_in_full_cart()
+    {
+        $data = false;
+        if ($this->input->post())
+        {
+            $id = $this->input->post('del');
+            $tab = $this->session->cart;
+            unset($tab[$id]);
+            if (empty($tab))
+            {
+                $this->session->cart = null;
+            }
+            else
+            {
+                $this->session->cart = $tab;
+            }
+            $this->load->view('full_cart');
+        }
+        else
+        {
+            echo $data;
+        }
+
     }
 
 }

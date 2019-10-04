@@ -2,7 +2,6 @@
 <div class="container">
     <div class="row">
         <?php
-        var_dump($this->session->userdata('role'));
         if ($this->session->userdata('role') != 1)
         {
             ?>
@@ -21,7 +20,18 @@
                             <p><a href="#"><?= $element->pro_prix ?> €</a></p>
                         </div>
                         <div class="card-action">
-                            <a href="#">Ajouter au panier</a>
+                            <?php echo form_open('Produits/add_product_in_cart'); ?>
+                            <input type="hidden" name="pro_qte" value="1">
+                            <input type="hidden" name="pro_prix" value="<?= $element->pro_prix ?>">
+                            <input type="hidden" name="pro_id" value="<?= $element->pro_id ?>">
+                            <input type="hidden" name="pro_libelle" value="<?= $element->pro_libelle ?>">
+                            <div class="right-align">
+                                <button class="waves-effect waves-light btn" type="submit">
+                                    <i class="material-icons">add_shopping_cart</i>
+                                </button> 
+
+                            </div>
+                            </form>                           
                         </div>
                         <div class="card-reveal">
                             <span class="card-title grey-text text-darken-4"><?= $element->pro_libelle ?><i class="material-icons right">close</i></span>

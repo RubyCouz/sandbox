@@ -12,7 +12,7 @@ $(document).ready(function () {
     // effet sur la navbar et sur la barre des tabs (transparentes => opaques)
     $(window).scroll(function () {
         if ($(window).scrollTop() > 50) {
-            $('nav').css('background', 'rgb(16, 165, 48)');
+            $('nav').css('background', 'rgb(226, 155, 31)');
         } else {
             $('nav').css('background', 'rgba(0,0,0,0.2)');
         }
@@ -28,7 +28,8 @@ $(document).ready(function () {
         outDuration: 450,
         constrainWidth: false,
         alignment: 'left',
-        coverTrigger: false
+        coverTrigger: false,
+        closeOnClick: false
     });
 // material box
     $('.materialboxed').materialbox();
@@ -36,6 +37,8 @@ $(document).ready(function () {
     $('.modal').modal();
 // select
     $('select').formSelect();
+
+
 
 
     /**
@@ -187,8 +190,6 @@ $(document).ready(function () {
             $('#login_user').removeClass('invalid');
         }
     });
-
-
 
 
 

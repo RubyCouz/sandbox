@@ -72,7 +72,7 @@ h2 {
     height: 90px!important;
 }
 .card-action {
-    height: 50px;
+    height: 70px;
 }
 .pic2 {
     width: 100%;
@@ -103,4 +103,26 @@ span.badge.new {
 /* modal */
 .modal {
     height: 435px;
+}
+
+.cart {
+    color: black; 
+}
+
+.dropdown-content {
+    width: 800px!important;
+    max-height: 400px;
+    min-height: 50px;
+}
+.del {
+    margin-top: 25px;
+}
+.tiny {
+    font-size: 1rem!important;
+}
+button.waves-effect.waves-light.btn.tiny.material-icons {
+    height: 25px;
+}
+div.col.s12.modify {
+    height: 25px;
 }

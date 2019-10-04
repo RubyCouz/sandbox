@@ -9,6 +9,7 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/monokai.min.css">
         <link rel="stylesheet" href="<?= base_url('/assets/css/style.css') ?>">
+        <script src="<?= base_url('/assets/js/jquery-3.3.1.js') ?>"></script>
     </head>
 
     <body>
@@ -19,11 +20,12 @@
                     <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                     <ul class="right hide-on-med-and-down">
                         <li><a href="<?= site_url('Produits/home_user') ?>">Catalogue</a></li>
+                        <li><a href="<?= site_url('Produits/sendMail') ?>">Contact</a></li>
                         <?php
                         if ($this->session->userdata('id') !== null)
                         {
                             ?>
-                            <a class="dropdown-trigger btn" href="#" data-target="dropdown_user"><?= $this->session->userdata('login') ?></a>
+                            <li><a class="dropdown-trigger btn" href="#" data-target="dropdown_user"><?= $this->session->userdata('login') ?></a></li>
                             <?php
                         }
                         else
@@ -33,7 +35,9 @@
                             <?php
                         }
                         ?>
-                        <li><a href="<?= site_url('Produits/sendMail') ?>">Contact</a></li>
+                        <li>
+                            <a class="dropdown-trigger" href="#" data-target="dropdown_cart"><i class="material-icons">shopping_cart</i></a>
+                        </li>
                     </ul>
                 </div>
             </nav>
@@ -43,8 +47,15 @@
                 <li><a href="<?= site_url('Client/signin_form') ?>">Inscription/Connexion</a></li>
                 <li><a href="<?= site_url('Produits/sendMail') ?>">Contact</a></li>
             </ul>
+            <!-- dropdown panier -->
+            <div class="dropdown-content cart" id="dropdown_cart">
+               <?php
+               $this->load->view('cart')
+               ?>
 
 
+            </div>
+            <!-- dropdown user -->
             <ul id="dropdown_user" class="dropdown-content">
                 <?php
                 if ($this->session->userdata('role') == 1)

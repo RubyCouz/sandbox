@@ -96,13 +96,13 @@ class Client extends CI_Controller {
         $this->email->from('sandbox@sandbox.com');
         $this->email->to($info->mail_user);
         $this->email->subject('Confirmation d\'inscription');
-        $this->email->message('Bonjour ' . $info->firstname_user . ''
-                . 'Votre inscription à bien été prise en compte.<br>'
+        $this->email->message('<h1>Bonjour ' . $info->firstname_user . '</h1>'
+                . '<p>Votre inscription à bien été prise en compte.<br>'
                 . 'Voici vos informations : <br>'
                 . 'Prénom : ' . $info->firstname_user . '<br>'
                 . 'Nom : ' . $info->lastname_user . '<br>'
                 . 'Email : ' . $info->mail_user . '<br>'
-                . 'Pseudo : ' . $info->login_user
+                . 'Pseudo : ' . $info->login_user . '</p>'
         );
         if ($this->email->send())
         {
@@ -210,7 +210,7 @@ class Client extends CI_Controller {
         $user_info = $result->row();
         $user_view['user_info'] = $user_info;
         $this->load->view('header');
-        $this->load->view('user_info');
+        $this->load->view('user_info', $user_view);
         $this->load->view('footer');
     }
 
