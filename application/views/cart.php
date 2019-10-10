@@ -29,14 +29,16 @@
                         <p><?= $prod['pro_qte'] ?></p>
                     </div>
                     <div class="col s2">
-                        <div class="row">
+                        <form class="row">
+                            <input type="hidden" name="pro_qte" id="qte" value="<?= $prod['pro_qte'] ?>">
+                            <input type="hidden" name="pro_id" id="id" value="<?= $prod['pro_id'] ?>">
                             <div class="col s12 modify">
-                                <button class="waves-effect waves-light btn tiny material-icons">add</button>
+                                <button type="button" class="waves-effect waves-light btn tiny material-icons add" value="<?= $prod['pro_id'] ?>">add</button>
                             </div>
                             <div class="col s12 modify">
-                                <button class="waves-effect waves-light btn tiny material-icons">remove</button>
+                                <button type="button" class="waves-effect waves-light btn tiny material-icons remove" value="<?= $prod['pro_id'] ?>">remove</button>
                             </div>
-                        </div>
+                        </form>
                     </div>
                     <div class="col s3">
                         <p><?= str_replace('.', ',', ($prod['pro_qte'] * $prod['pro_prix'])); ?> <sup>€</sup></p>

@@ -18,32 +18,55 @@ class Produits extends CI_Controller {
     }
 
     /**
-     * affichage vue catalogue client
+     * affichage vue catalogue 
      */
     public function home_user()
     {
+// pagination
+        // récupération du numér de la page passé en paramêtre
+        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+        // limit d'affichage de produit par page
+        $limit = 12;
+
 
         // chargement du model "Prod_model"
         $this->load->model('Prod_model');
         // appel de la méthode "liste()" du model précédemment chargé
-        $productList = $this->Prod_model->liste();
-        $listView['productList'] = $productList;
+        $productList = $this->Prod_model->liste($page, $limit);
+        $count_item = $this->Prod_model->count_items();
+        $listView['count'] = $count_item;
+        $listView['productList'] = $productList;        
+        
+        // formatage de la pagination
+        $config['base_url'] = 'http://localhost/ci/index.php/Produits/home_user';
+        $config['total_rows'] = $count_item;
+        $config['per_page'] = $limit;
+        $config['num_links'] = 5;
 
+        $config['cur_tag_open'] = ' <li class="active">';
+        $config['cur_tag_close'] = '</li>';
+        $config['full_tag_open'] = '<ul class="pagination">';
+        $config['full_tag_close'] = '</ul>';
+        $config['first_link'] = FALSE;
+        $config['first_tag_open'] = FALSE;
+        $config['first_tag_close'] = FALSE;
+        $config['last_link'] = FALSE;
+        $config['last_tag_open'] = FALSE;
+        $config['last_tag_close'] = FALSE;
+        $config['next_link'] = '<i class="material-icons">chevron_right</i>';
+        $config['next_tag_open'] = '<li class="waves-effect white-text">';
+        $config['next_tag_close'] = '</li>';
+        $config['prev_link'] = '<i class="material-icons">chevron_left</i>';
+        $config['prev_tag_open'] = '<li class="waves-effect white-text">';
+        $config['prev_tag_close'] = '</li>';
+        $config['num_tag_open'] = ' <li class="waves-effect white-text">';
+        $config['num_tag_close'] = '</li>';
+        $this->pagination->initialize($config);
+        
         $this->load->view('header');
         $this->load->view('home_user', $listView);
         $this->load->view('footer');
-    }
 
-    /**
-     * affichage de la liste de produits
-     */
-    public function liste()
-    {
-
-// chargement des fichiers vues
-        $this->load->view('header');
-        $this->load->view('liste', $listView);
-        $this->load->view('footer');
     }
 
     /**
@@ -51,6 +74,7 @@ class Produits extends CI_Controller {
      */
     public function addProduct()
     {
+
 //$this->output->enable_profiler(TRUE);
 // ATTENTION Au FORMULAIRE : IL FAUT QUE LES NAMES DES INPUT SOIENT IDENTIQUES AUX NOMS DES CHAMPS DE LA TABLE, ET SUPPRIMER LE POST['SUBMIT']
         if ($this->input->post())
@@ -95,11 +119,13 @@ class Produits extends CI_Controller {
                 // chargement du helper pour l'upload
                 $this->load->library('upload', $config);
                 // upload du fichier
-                $this->upload->do_upload("pro_photo");
+                $this->upload->do_upload('pro_photo');
                 //gestion des erreurs pour l'upload
                 $error = $this->upload->display_errors();
                 if ($error == '')
                 {
+                    $this->output->enable_profiler(TRUE);
+
                     $file = $this->upload->data();
 
                     $this->load->model('Prod_model');
@@ -339,15 +365,12 @@ class Produits extends CI_Controller {
     {
 
         $data = $this->input->post();
-        var_dump($data);
         $key = $this->input->post('pro_id');
-        var_dump($key);
         if ($this->session->cart == null) // création du panier s'il n'existe pas	
         {
             $tab = array($key => $data);
-            var_dump($tab);
             $this->session->cart = $tab;
-            redirect('Produits/home_user');
+            $this->load->view('cart');
         }
         else //si le panier existe
         {
@@ -365,19 +388,20 @@ class Produits extends CI_Controller {
                 $tab = $this->session->cart;
                 $tab[$key]['pro_qte'] += 1;
                 $this->session->cart = $tab;
-                redirect('Produits/home_user');
+                $this->load->view('cart');
             }
             else
             { //sinon le produit est ajouté dans le panier
                 $tab[$key] = $data;
                 $this->session->cart = $tab;
-                redirect('Produits/home_user');
+                $this->load->view('cart');
             }
         }
     }
-/**
- * suppression d'un produit du panier dans le dropdown
- */
+
+    /**
+     * suppression d'un produit du panier dans le dropdown
+     */
     public function del_product_in_cart()
     {
         $data = false;
@@ -400,9 +424,8 @@ class Produits extends CI_Controller {
         {
             echo $data;
         }
-
     }
-    
+
     /**
      * suppression d'un produit dans le panier en affichage complet
      */
@@ -428,7 +451,65 @@ class Produits extends CI_Controller {
         {
             echo $data;
         }
+    }
 
+    public function increase_product()
+    {
+        $key = $this->input->post('add');
+        $tab = $this->session->cart;
+        $tab[$key]['pro_qte'] += 1;
+        $this->session->cart = $tab;
+        $this->load->view('cart');
+    }
+
+    public function decrease_product()
+    {
+        $key = $this->input->post('remove');
+        $tab = $this->session->cart;
+        $tab[$key]['pro_qte'] -= 1;
+        if ($tab[$key]['pro_qte'] === 0)
+        {
+            unset($tab[$key]);
+        }
+        if (empty($tab))
+        {
+            $this->session->cart = null;
+        }
+        else
+        {
+            $this->session->cart = $tab;
+        }
+        $this->session->cart = $tab;
+        $this->load->view('cart');
+    }
+    public function increase_product_full_cart()
+    {
+        $key = $this->input->post('add');
+        $tab = $this->session->cart;
+        $tab[$key]['pro_qte'] += 1;
+        $this->session->cart = $tab;
+        $this->load->view('full_cart');
+    }
+
+    public function decrease_product_full_cart()
+    {
+        $key = $this->input->post('remove');
+        $tab = $this->session->cart;
+        $tab[$key]['pro_qte'] -= 1;
+        if ($tab[$key]['pro_qte'] === 0)
+        {
+            unset($tab[$key]);
+        }
+        if (empty($tab))
+        {
+            $this->session->cart = null;
+        }
+        else
+        {
+            $this->session->cart = $tab;
+        }
+        $this->session->cart = $tab;
+        $this->load->view('full_cart');
     }
 
 }

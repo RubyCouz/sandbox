@@ -50,18 +50,18 @@ $(document).ready(function () {
     var passwordPattern = /^[a-zA-Z\d\- éèêëàâäùüûôöîï#$@]+$/;
     var loginPattern = /^[a-zA-Z\d\- éèêëàâäùüûôöîï#$@]+$/;
 
-    // champs login
+    // champs login => vérification de la présence du pseud dans la bdd
     $('#login').keyup(function () { //  sélecction du champs login et définition de l'évènement
         var login = $(this).val(); // récupération de la valeur du champs login
         $.post(url + 'Client/if_client_exists', {// envoie des données récupérées vers le contrôleur en post
             login_user: login // définition des données à anvoiyées
         }, function (data) {
             if (data) { // si présence d'une réponse du contrôleur
-                $('#missingLogin').html(data); // affichage d'un message
+                $('#missingLog').html(data); // affichage d'un message
                 $('#login').addClass('invalid');
                 $('#login').removeClass('valid');
             } else {
-                $('#missingLogin').html(''); // on efface le message
+                $('#missingLog').html(''); // on efface le message
                 $('#login').addClass('valid');
                 $('#login').removeClass('invalid');
             }
@@ -120,21 +120,22 @@ $(document).ready(function () {
         }
     });
     // champs mot de passe
-    $('#password').keyup(function () {
+    $('#password1').keyup(function () {
         var password = $(this).val();
         var passwordVerif = $('#passwordVerif').val();
+        console.log('mdp : ' + password);
         if (password === '') {
-            $('#missingPassword').html('Le champs "Mot de passe" n\'est pas renseigné');
-            $('#password').addClass('invalid');
-            $('#password').removeClass('valid');
+            $('#missingPassword1').html('Le champs "Mot de passe" n\'est pas renseigné');
+            $('#password1').addClass('invalid');
+            $('#password1').removeClass('valid');
         } else if (passwordPattern.test(password) === false) {
-            $('#missingPassword').html('Le champs "Mot de passe" n\'est pas valide');
-            $('#password').addClass('invalid');
-            $('#password').removeClass('valid');
+            $('#missingPassword1').html('Le champs "Mot de passe" n\'est pas valide');
+            $('#password1').addClass('invalid');
+            $('#password1').removeClass('valid');
         } else {
-            $('#missingPassword').html('');
-            $('#password').addClass('valid');
-            $('#password').removeClass('invalid');
+            $('#missingPassword1').html('');
+            $('#password1').addClass('valid');
+            $('#password1').removeClass('invalid');
         }
         if (password !== passwordVerif) {
             $('#errorPassword').html('Les mots de passe doivent être identiques');
@@ -146,7 +147,8 @@ $(document).ready(function () {
     // champs vérification mdp
     $('#passwordVerif').keyup(function () {
         var passwordVerif = $(this).val();
-        var password = $('#password').val();
+        var password = $('#password1').val();
+        console.log('mdp verif :' + passwordVerif);
         if (passwordVerif === '') {
             $('#missingPasswordVerif').html('Le champs "Vérification du mot de passe" n\'est pas renseigné');
             $('#passwordVerif').addClass('invalid');
@@ -191,100 +193,93 @@ $(document).ready(function () {
         }
     });
 
-
-
-
-
-
-
-
     /**
      * Vérification du formulaire jarditou ajout produit
      */
     var textValid = /^[a-zA-Z\-\déèàçùëüïô äâêûîô#&]+$/;
     var numberValid = /^[\d]*[.]?[\d]{1,2}$/;
     var picValid = /^[a-z0-9\_\-]*[.]((jpeg)|(png)|(jpg)|(gif))$/;
-    $('#ref').blur(function () {
-        if ($('#ref').val() == '') {
-            $('#ref').removeClass('invalid');
-            $('#ref').addClass('invalid');
+    $('#addRef').keyup(function () {
+        if ($('#addRef').val() == '') {
+            $('#addRef').removeClass('invalid');
+            $('#addRef').addClass('invalid');
             $('#errorRef').html('Saisie manquante');
 
-        } else if (textValid.test($('#ref').val()) == false) {
-            $('#ref').removeClass('valid');
-            $('#ref').addClass('invalid');
+        } else if (textValid.test($('#addRef').val()) == false) {
+            $('#addRef').removeClass('valid');
+            $('#addRef').addClass('invalid');
             $('#errorRef').html('Saisie incorrect');
         } else {
-            $('#ref').removeClass('invalid');
-            $('#ref').addClass('valid');
+            $('#addRef').removeClass('invalid');
+            $('#addRef').addClass('valid');
             $('#errorRef').html('');
         }
     });
-    $('#label').blur(function () {
-        if ($('#label').val() == '') {
-            $('#label').removeClass('invalid');
-            $('#label').addClass('invalid');
+    $('#addLabel').keyup(function () {
+        if ($('#addLabel').val() == '') {
+            $('#addLabel').removeClass('invalid');
+            $('#addLabel').addClass('invalid');
             $('#errorLabel').html('Saisie manquante');
 
-        } else if (textValid.test($('#label').val()) == false) {
-            $('#label').removeClass('valid');
-            $('#label').addClass('invalid');
+        } else if (textValid.test($('#addLabel').val()) == false) {
+            $('#addLabel').removeClass('valid');
+            $('#addLabel').addClass('invalid');
             $('#errorLabel').html('Saisie incorrect');
         } else {
-            $('#label').removeClass('invalid');
-            $('#label').addClass('valid');
+            $('#addLabel').removeClass('invalid');
+            $('#addLabel').addClass('valid');
             $('#errorLabel').html('');
         }
     });
-    $('#color').blur(function () {
-        if ($('#color').val() == '') {
-            $('#color').removeClass('invalid');
-            $('#color').addClass('invalid');
+    $('#addColor').keyup(function () {
+        if ($('#addColor').val() == '') {
+            $('#addColor').removeClass('invalid');
+            $('#addColor').addClass('invalid');
             $('#errorColor').html('Saisie manquante');
 
-        } else if (textValid.test($('#color').val()) == false) {
-            $('#color').removeClass('valid');
-            $('#color').addClass('invalid');
+        } else if (textValid.test($('#addColor').val()) == false) {
+            $('#addColor').removeClass('valid');
+            $('#addColor').addClass('invalid');
             $('#errorColor').html('Saisie incorrect');
         } else {
-            $('#color').removeClass('invalid');
-            $('#color').addClass('valid');
+            $('#addColor').removeClass('invalid');
+            $('#addColor').addClass('valid');
             $('#errorColor').html('');
         }
     });
-    $('#stock').blur(function () {
-        if ($('#stock').val() == '') {
-            $('#stock').removeClass('invalid');
-            $('#stock').addClass('invalid');
+    $('#addStock').keyup(function () {
+        if ($('#addStock').val() == '') {
+            $('#addStock').removeClass('invalid');
+            $('#addStock').addClass('invalid');
             $('#errorStock').html('Saisie manquante');
 
-        } else if (numberValid.test($('#stock').val()) == false) {
-            $('#stock').removeClass('valid');
-            $('#stock').addClass('invalid');
+        } else if (numberValid.test($('#addStock').val()) == false) {
+            $('#addStock').removeClass('valid');
+            $('#addStock').addClass('invalid');
             $('#errorStock').html('Saisie incorrect');
         } else {
-            $('#stock').removeClass('invalid');
-            $('#stock').addClass('valid');
+            $('#addStock').removeClass('invalid');
+            $('#addStock').addClass('valid');
             $('#errorStock').html('');
         }
     });
-    $('#price').blur(function () {
-        if ($('#price').val() == '') {
-            $('#price').removeClass('invalid');
-            $('#price').addClass('invalid');
+    $('#addPrice').keyup(function () {
+        if ($('#addPprice').val() == '') {
+            $('#addPprice').removeClass('invalid');
+            $('#addPprice').addClass('invalid');
             $('#errorPrice').html('Saisie manquante');
 
-        } else if (numberValid.test($('#price').val()) == false) {
-            $('#price').removeClass('valid');
-            $('#price').addClass('invalid');
+        } else if (numberValid.test($('#addPprice').val()) == false) {
+            $('#addPprice').removeClass('valid');
+            $('#addPprice').addClass('invalid');
             $('#errorPrice').html('Saisie incorrect');
         } else {
-            $('#price').removeClass('invalid');
-            $('#price').addClass('valid');
+            $('#addPprice').removeClass('invalid');
+            $('#addPprice').addClass('valid');
             $('#errorPrice').html('');
         }
     });
-    $('#description').blur(function () {
+    $('#description').keyup(function () {
         if ($('#description').val() == '') {
             $('#description').removeClass('invalid');
             $('#description').addClass('invalid');
@@ -300,27 +295,65 @@ $(document).ready(function () {
             $('#errorDesc').html('');
         }
     });
-    if ($('#file').val() == '') {
-        $('#file').removeClass('invalid');
-        $('#descrifileption').addClass('valid');
-        $('#errorDesc').html('');
-    }
 
-
-    $('#file').change(function () {
-        if ($('#file').val() == '') {
-            $('#file').removeClass('invalid');
-            $('#file').addClass('invalid');
+    $('#addFile').change(function () {
+        if ($('#addFile').val() == '') {
+            $('#addFile').removeClass('invalid');
+            $('#addFile').addClass('invalid');
             $('#errorFile').html('Fichier  manquant');
-        } else if (picValid.test($('#file').val()) == false) {
-            $('#file').removeClass('valid');
-            $('#file').addClass('invalid');
+        } else if (picValid.test($('#addFile').val()) == false) {
+            $('#addFile').removeClass('valid');
+            $('#addFile').addClass('invalid');
             $('#errorFile').html('Mauvais format de fichier');
         } else {
-            $('#file').removeClass('invalid');
-            $('#file').addClass('valid');
+            $('#addFile').removeClass('invalid');
+            $('#addFile').addClass('valid');
             $('#errorFile').html('');
         }
     });
-}
-);
+    
+    $('#addDescription').change(function () {
+        if ($('#addDescription').val() == '') {
+            $('#addDescription').removeClass('invalid');
+            $('#addDescription').addClass('invalid');
+            $('#errorDesc').html('DEscription manquante');
+        } else if (textValid.test($('#addDescription').val()) == false) {
+            $('#addDescription').removeClass('valid');
+            $('#addDescription').addClass('invalid');
+            $('#errorDesc').html('Description non valide');
+        } else {
+            $('#addDescription').removeClass('invalid');
+            $('#addDescription').addClass('valid');
+            $('#errorDesc').html('');
+        }
+    });
+
+    /**
+     * Ajax ajout produit panier 
+     */
+
+    $('.addProduct').click(function () {
+        var pro_id = $(this).val();
+        var pro_qte = $('#pro_qte' + pro_id).val();
+        var pro_prix = $('#pro_prix' + pro_id).val();
+        var pro_libelle = $('#pro_libelle' + pro_id).val();
+        console.log('id : ' + pro_id);
+        console.log('qte : ' + pro_qte);
+        console.log('prix : ' + pro_prix);
+        console.log('libelle : ' + pro_libelle);
+        $.post(url + 'Produits/add_product_in_cart', {// envoie des données récupérées vers le contrôleur en post
+            pro_qte: pro_qte, // définition des données à envoyées
+            pro_prix: pro_prix,
+            pro_id: pro_id,
+            pro_libelle: pro_libelle
+        }, function (data) {
+            if (data) { // si présence d'une réponse du contrôleur
+                $('#dropdown_cart').html(data);
+            } else {
+                alert('nope');
+            }
+        },
+                'HTML'); // type de données transmise
+    });
+
+});

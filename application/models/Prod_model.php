@@ -1,6 +1,7 @@
 <?php
 
-if (!defined('BASEPATH')) exit('no direct scriptp access allowed');
+if (!defined('BASEPATH'))
+    exit('no direct scriptp access allowed');
 
 /**
  * Description of produitModel
@@ -13,17 +14,31 @@ class Prod_model extends CI_model {
     /**
      * Affichage de la liste des produits
      */
-    public function liste()
+    public function liste($page, $limit)
     {
         //appel de la methode database -> permet la connexion à la base de données.
         $this->load->database();
-        // stockage de la requète dans une variable
-        $query = 'SELECT * from `produits`';
+        // requète select
+        $this->db->select('*');
+        $this->db->from('produits');
+        $this->db->limit($limit, $page);
         // exécution de la requète
-        $result = $this->db->query($query);
+        $result = $this->db->get();
         // récupération des résultats
         $productList = $result->result();
         return $productList;
+    }
+
+    /**
+     * Compte du nombre d'entrées dans la table produits
+     * @return type
+     */
+    public function count_items()
+    {
+        $query = 'SELECT COUNT(*) as nb FROM `produits`';
+        $result = $this->db->query($query);
+        $count_item = $result->row();
+        return $count_item->nb;
     }
 
     /**
@@ -49,7 +64,7 @@ class Prod_model extends CI_model {
      */
     public function update($id)
     {
-       
+
         $file = $this->upload->data();
         $data = $this->input->post();
 // récupération de l'extensio du fichier en vue de son insertion en base de données et extraction du '.' (codeigniter garde le point avant l'extension)

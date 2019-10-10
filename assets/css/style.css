@@ -126,3 +126,11 @@ button.waves-effect.waves-light.btn.tiny.material-icons {
 div.col.s12.modify {
     height: 25px;
 }
+.pagination li a {
+    color: white;
+    width: 30px;
+}
+.pagination li.active {
+    width: 30px;
+    background: rgb(226, 155, 31);
+}

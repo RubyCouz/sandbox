@@ -14,7 +14,38 @@ $(document).ready(function () {
             if (data) {
                 $('#cart').html(data);
             } else {
-alert('NOOOOOOOOOOOOOOON !!!!!!!!!');
+                alert('NOOOOOOOOOOOOOOON !!!!!!!!!');
+            }
+        });
+    });
+     /**
+     * incrémentation produit panier
+     */
+    $('.addProduct').click(function () {
+        var add = $(this).val();
+        $.post(url + 'Produits/increase_product_full_cart', {
+            add: add
+        }, function (data) {
+            if (data) {
+                $('#cart').html(data);
+            } else {
+                alert('NOOOOOOOOOOOOOOON !!!!!!!!!');
+            }
+        });
+    });
+    
+    /**
+     * décrémentation produit panier
+     */
+    $('.removeProduct').click(function () {
+        var remove = $(this).val();
+        $.post(url + 'Produits/decrease_product_full_cart', {
+            remove: remove
+        }, function (data) {
+            if (data) {
+                $('#cart').html(data);
+            } else {
+                alert('NOOOOOOOOOOOOOOON !!!!!!!!!');
             }
         });
     });

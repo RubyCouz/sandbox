@@ -2,22 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/wamp64/www/ci/assets/css/style.css</file>
-            <file>file:/C:/wamp64/www/ci/application/models/User_model.php</file>
-            <file>file:/C:/wamp64/www/ci/application/controllers/Client.php</file>
-            <file>file:/C:/wamp64/www/ci/application/views/order.php</file>
-            <file>file:/C:/wamp64/www/ci/application/config/autoload.php</file>
-            <file>file:/C:/wamp64/www/ci/application/views/footer.php</file>
-            <file>file:/C:/wamp64/www/ci/application/views/header.php</file>
-            <file>file:/C:/wamp64/www/ci/application/views/home.php</file>
-            <file>file:/C:/wamp64/www/ci/application/views/user_info.php</file>
-            <file>file:/C:/wamp64/www/ci/application/views/cart.php</file>
-            <file>file:/C:/wamp64/www/ci/application/controllers/Produits.php</file>
-            <file>file:/C:/wamp64/www/ci/assets/js/script.js</file>
-            <file>file:/C:/wamp64/www/ci/assets/js/ajax_cart.js</file>
-            <file>file:/C:/wamp64/www/ci/application/views/home_user.php</file>
-            <file>file:/C:/wamp64/www/ci/application/views/signin.php</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

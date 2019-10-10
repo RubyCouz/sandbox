@@ -18,4 +18,38 @@ $(document).ready(function () {
             }
         });
     });
+    /**
+     * incrémentation produit panier
+     */
+    $('.add').click(function () {
+        var add = $(this).val();
+        $.post(url + 'Produits/increase_product', {
+            add: add
+        }, function (data) {
+            if (data) {
+                $('#dropdown_cart').html(data);
+            } else {
+                alert('NOOOOOOOOOOOOOOON !!!!!!!!!');
+            }
+        });
+    });
+    
+    /**
+     * décrémentation produit panier
+     */
+    $('.remove').click(function () {
+        var remove = $(this).val();
+        var id = $('#id').val;
+        $.post(url + 'Produits/decrease_product', {
+            remove: remove
+        }, function (data) {
+            if (data) {
+                $('#dropdown_cart').html(data);
+            } else {
+                alert('NOOOOOOOOOOOOOOON !!!!!!!!!');
+            }
+        });
+    });
+    
 });
+

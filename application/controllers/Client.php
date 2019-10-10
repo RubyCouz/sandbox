@@ -61,6 +61,7 @@ class Client extends CI_Controller {
                 $data['login_user'] = $this->input->post('login_user');
                 $data['mail_user'] = $this->input->post('mail_user');
                 $data['password_user'] = $this->input->post('password_user');
+                $data['inscript_user'] = mdate('%Y-%m-%d', time());
                 $this->load->model('User_model');
                 $this->User_model->new_user($data);
                 $id = $this->db->insert_id();

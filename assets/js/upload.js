@@ -20,7 +20,7 @@
     }
 
     var allowedTypes = ['png', 'jpg', 'jpeg', 'gif'],
-        fileInput = document.querySelector('#file'),
+        fileInput = document.querySelector('#addFile'),
         upload = document.querySelector('#upload'),
         prev = document.querySelector('#prev');
 

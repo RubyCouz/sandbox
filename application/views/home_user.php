@@ -13,20 +13,20 @@
                 <div class="col s3">
                     <div class="card sticky-action">
                         <div class="card-image waves-effect waves-block waves-light">
-                            <img class="activator pic" src="../../assets/img/<?= $element->pro_id . '.' . $element->pro_photo ?>" alt="Photo d'illustration" title="Photo de <?= $element->pro_libelle ?>">
+                            <img class="activator pic" src="<?= base_url('assets/img/' . $element->pro_id . '.' . $element->pro_photo)?>" alt="Photo d'illustration" title="Photo de <?= $element->pro_libelle ?>">
                         </div>
                         <div class="card-content cardClient">
                             <span class="card-title activator grey-text text-darken-4"><?= $element->pro_libelle ?><i class="material-icons right">more_vert</i></span>
                             <p><a href="#"><?= $element->pro_prix ?> €</a></p>
                         </div>
                         <div class="card-action">
-                            <?php echo form_open('Produits/add_product_in_cart'); ?>
-                            <input type="hidden" name="pro_qte" value="1">
-                            <input type="hidden" name="pro_prix" value="<?= $element->pro_prix ?>">
-                            <input type="hidden" name="pro_id" value="<?= $element->pro_id ?>">
-                            <input type="hidden" name="pro_libelle" value="<?= $element->pro_libelle ?>">
+                            <?php echo form_open(); ?>
+                            <input type="hidden" name="pro_qte" id="pro_qte<?= $element->pro_id ?>" value="1">
+                            <input type="hidden" name="pro_prix" id="pro_prix<?= $element->pro_id ?>" value="<?= $element->pro_prix ?>">
+                            <input type="hidden" name="pro_id" id="pro_id" value="<?= $element->pro_id ?>">
+                            <input type="hidden" name="pro_libelle" id="pro_libelle<?= $element->pro_id ?>" value="<?= $element->pro_libelle ?>">
                             <div class="right-align">
-                                <button class="waves-effect waves-light btn" type="submit">
+                                <button class="waves-effect waves-light btn addProduct" type="button" id="addProduct" value="<?= $element->pro_id ?>">
                                     <i class="material-icons">add_shopping_cart</i>
                                 </button> 
 
@@ -41,6 +41,15 @@
                 </div>
                 <?php
             }
+            ?>
+            <div class="row">
+                <div class="col s12 center-align">
+                    <!-- pagination -->
+                    
+                    <?php echo $this->pagination->create_links(); ?>
+                </div>
+            </div>
+            <?php
         }
         else
         {
@@ -90,7 +99,17 @@
                     ?>
                 </tbody>
             </table>    
-            <a href="<?= site_url('Produits/addProduct') ?>" class="waves-effect waves-light btn" title="Lien vers ajout d'un produit" target="_blank">Ajouter un produit</a>
+            <div class="row">
+                <div class="col s12 center-align">
+                    <!-- pagination -->
+                    <?php echo $this->pagination->create_links(); ?>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <a href="<?= site_url('Produits/addProduct') ?>" class="waves-effect waves-light btn" title="Lien vers ajout d'un produit" target="_blank">Ajouter un produit</a>
+                </div>
+            </div>
         </div> 
         <?php
     }

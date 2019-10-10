@@ -1,15 +1,18 @@
+<?php
+$url = "http://" . $_SERVER['HTTP_HOST'] . "." . $_SERVER['REQUEST_URI'];
+?>
 <!DOCTYPE html>
 <html lang="fr">
     <head>
         <title>Sandbox</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="<?= base_url('/assets/css/materialize.min.css') ?>">
+        <link rel="stylesheet" href="<?= base_url('assets/css/materialize.min.css') ?>">
         <link rel="icon" href="<?= base_url('assets/img/icons/favicon.ico') ?>" />
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/monokai.min.css">
-        <link rel="stylesheet" href="<?= base_url('/assets/css/style.css') ?>">
-        <script src="<?= base_url('/assets/js/jquery-3.3.1.js') ?>"></script>
+        <link rel="stylesheet" href="<?= base_url('assets/css/style.css') ?>">
+        <script src="<?= base_url('assets/js/jquery-3.3.1.js') ?>"></script>
     </head>
 
     <body>
@@ -34,10 +37,15 @@
                             <li><a class="modal-trigger" href="#signin">Inscription/Connexion</a></li>
                             <?php
                         }
-                        ?>
-                        <li>
-                            <a class="dropdown-trigger" href="#" data-target="dropdown_cart"><i class="material-icons">shopping_cart</i></a>
-                        </li>
+                        if ($url != 'http://localhost./ci/index.php/Produits/cart')
+                        {
+                            ?>
+                            <li>
+                                <a class="dropdown-trigger" href="#" data-target="dropdown_cart"><i class="material-icons">shopping_cart</i></a>
+                            </li>
+                            <?php
+                        }
+                        ?>                        
                     </ul>
                 </div>
             </nav>
@@ -49,9 +57,9 @@
             </ul>
             <!-- dropdown panier -->
             <div class="dropdown-content cart" id="dropdown_cart">
-               <?php
-               $this->load->view('cart')
-               ?>
+                <?php
+                $this->load->view('cart')
+                ?>
 
 
             </div>
