@@ -264,18 +264,18 @@ $(document).ready(function () {
         }
     });
     $('#addPrice').keyup(function () {
-        if ($('#addPprice').val() == '') {
-            $('#addPprice').removeClass('invalid');
-            $('#addPprice').addClass('invalid');
+        if ($('#addPrice').val() == '') {
+            $('#addPrice').removeClass('invalid');
+            $('#addPrice').addClass('invalid');
             $('#errorPrice').html('Saisie manquante');
 
-        } else if (numberValid.test($('#addPprice').val()) == false) {
-            $('#addPprice').removeClass('valid');
-            $('#addPprice').addClass('invalid');
+        } else if (numberValid.test($('#addPrice').val()) == false) {
+            $('#addPrice').removeClass('valid');
+            $('#addPrice').addClass('invalid');
             $('#errorPrice').html('Saisie incorrect');
         } else {
-            $('#addPprice').removeClass('invalid');
-            $('#addPprice').addClass('valid');
+            $('#addPrice').removeClass('invalid');
+            $('#addPrice').addClass('valid');
             $('#errorPrice').html('');
         }
     });
@@ -311,7 +311,7 @@ $(document).ready(function () {
             $('#errorFile').html('');
         }
     });
-    
+
     $('#addDescription').change(function () {
         if ($('#addDescription').val() == '') {
             $('#addDescription').removeClass('invalid');
@@ -331,26 +331,27 @@ $(document).ready(function () {
     /**
      * Ajax ajout produit panier 
      */
-
+// définition de l'event 'click' sur une class
     $('.addProduct').click(function () {
+        // attribution des valeur du formulaire au variable qui seront transmises au contrôleur
         var pro_id = $(this).val();
         var pro_qte = $('#pro_qte' + pro_id).val();
         var pro_prix = $('#pro_prix' + pro_id).val();
         var pro_libelle = $('#pro_libelle' + pro_id).val();
-        console.log('id : ' + pro_id);
-        console.log('qte : ' + pro_qte);
-        console.log('prix : ' + pro_prix);
-        console.log('libelle : ' + pro_libelle);
+        var pro_photo = $('#pro_photo' + pro_id).val();
         $.post(url + 'Produits/add_product_in_cart', {// envoie des données récupérées vers le contrôleur en post
             pro_qte: pro_qte, // définition des données à envoyées
             pro_prix: pro_prix,
             pro_id: pro_id,
-            pro_libelle: pro_libelle
+            pro_libelle: pro_libelle,
+            pro_photo: pro_photo
         }, function (data) {
             if (data) { // si présence d'une réponse du contrôleur
+                // affichage du panier
                 $('#dropdown_cart').html(data);
             } else {
-                alert('nope');
+                // affichage d'un message d'erreur
+                $('#dropdown_cart').html('Il y a eu un problème lors du chargement du panier');
             }
         },
                 'HTML'); // type de données transmise

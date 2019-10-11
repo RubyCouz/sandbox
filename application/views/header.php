@@ -64,7 +64,7 @@ $url = "http://" . $_SERVER['HTTP_HOST'] . "." . $_SERVER['REQUEST_URI'];
 
             </div>
             <!-- dropdown user -->
-            <ul id="dropdown_user" class="dropdown-content">
+            <ul id="dropdown_user" class="dropdown-content dropdown_user">
                 <?php
                 if ($this->session->userdata('role') == 1)
                 {

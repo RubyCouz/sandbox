@@ -33,10 +33,12 @@ class Produits extends CI_Controller {
         $this->load->model('Prod_model');
         // appel de la méthode "liste()" du model précédemment chargé
         $productList = $this->Prod_model->liste($page, $limit);
+//        var_dump($productList);
+
         $count_item = $this->Prod_model->count_items();
         $listView['count'] = $count_item;
-        $listView['productList'] = $productList;        
-        
+        $listView['productList'] = $productList;
+
         // formatage de la pagination
         $config['base_url'] = 'http://localhost/ci/index.php/Produits/home_user';
         $config['total_rows'] = $count_item;
@@ -62,11 +64,10 @@ class Produits extends CI_Controller {
         $config['num_tag_open'] = ' <li class="waves-effect white-text">';
         $config['num_tag_close'] = '</li>';
         $this->pagination->initialize($config);
-        
+
         $this->load->view('header');
         $this->load->view('home_user', $listView);
         $this->load->view('footer');
-
     }
 
     /**
@@ -124,7 +125,7 @@ class Produits extends CI_Controller {
                 $error = $this->upload->display_errors();
                 if ($error == '')
                 {
-                    $this->output->enable_profiler(TRUE);
+                    //$this->output->enable_profiler(TRUE);
 
                     $file = $this->upload->data();
 
@@ -363,18 +364,24 @@ class Produits extends CI_Controller {
 
     public function add_product_in_cart()
     {
-
+// stockage des données (du formulaire caché contenant les données du produit) dans une variable
         $data = $this->input->post();
+        // stockage de l'id dans une variable en vue de définir la clé associative qui stockera les données du post
         $key = $this->input->post('pro_id');
         if ($this->session->cart == null) // création du panier s'il n'existe pas	
         {
+            //stockage des données produits vers la clé associative => id du produit
             $tab = array($key => $data);
+            // assignation du tableau a la variable de session
             $this->session->cart = $tab;
+            // chargemant de la vue du panier
             $this->load->view('cart');
         }
         else //si le panier existe
         {
+            // stockage de la varible de session dans un tableau
             $tab = $this->session->cart;
+            // définition d'un boolean (définira si un produit est déja dans le panier ou non
             $sortie = false;
             foreach ($tab as $produit) //on cherche si le produit existe déjà dans le panier
             {
@@ -383,7 +390,7 @@ class Produits extends CI_Controller {
                     $sortie = true;
                 }
             }
-            if ($sortie) //si le produit existe déjà, l'utilisateur est averti
+            if ($sortie) //si le produit existe déjà, on incrémente la quantité du produit déjà présent dans le panier
             {
                 $tab = $this->session->cart;
                 $tab[$key]['pro_qte'] += 1;
@@ -482,6 +489,7 @@ class Produits extends CI_Controller {
         $this->session->cart = $tab;
         $this->load->view('cart');
     }
+
     public function increase_product_full_cart()
     {
         $key = $this->input->post('add');

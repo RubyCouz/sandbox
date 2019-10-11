@@ -110,7 +110,7 @@ span.badge.new {
 }
 
 .dropdown-content {
-    width: 800px!important;
+    width: 800px;
     max-height: 400px;
     min-height: 50px;
 }
@@ -133,4 +133,12 @@ div.col.s12.modify {
 .pagination li.active {
     width: 30px;
     background: rgb(226, 155, 31);
+}
+.dropdown_user {
+    width: 200px;
+}
+
+img.circle.responsive-img{
+    width: 70px;
+    height: 50px;
 }

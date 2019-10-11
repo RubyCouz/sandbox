@@ -25,6 +25,7 @@
                             <input type="hidden" name="pro_prix" id="pro_prix<?= $element->pro_id ?>" value="<?= $element->pro_prix ?>">
                             <input type="hidden" name="pro_id" id="pro_id" value="<?= $element->pro_id ?>">
                             <input type="hidden" name="pro_libelle" id="pro_libelle<?= $element->pro_id ?>" value="<?= $element->pro_libelle ?>">
+                            <input type="hidden" name="pro_photo" id="pro_photo<?= $element->pro_id ?>" value="<?= $element->pro_photo ?>">
                             <div class="right-align">
                                 <button class="waves-effect waves-light btn addProduct" type="button" id="addProduct" value="<?= $element->pro_id ?>">
                                     <i class="material-icons">add_shopping_cart</i>
@@ -55,7 +56,8 @@
         {
             ?>
             <h1>Liste des produits</h1>
-            <a href="<?= site_url('Produits/addProduct') ?>" class="waves-effect waves-light btn" title="Lien vers ajout d'un produit" target="_blank">Ajouter un produit</a>
+            <a href="<?= site_url('Produits/addProduct') ?>" class="waves-effect waves-light btn" title="Lien vers ajout d'un produit">Ajouter un produit</a>
+            
             <table class="stripped highlight centered responsive-table table">
                 <thead>
                 <th>Photo</th>
@@ -88,8 +90,8 @@
                             <td><?= $row->pro_description ?></td>
                             <td><?= $row->pro_prix ?></td>
                             <td><?= $row->pro_stock ?></td>
-                            <td><?= $row->pro_d_ajout ?></td>
-                            <td><?= $row->pro_d_modif ?></td>
+                            <td><?= $row->add_date ?></td>
+                            <td><?= $row->update_date ?></td>
                             <td><?= $row->pro_bloque == 1 ? 'Oui' : 'Non' ?></td>
                             <td><a href="<?= site_url('Produits/update') . '/' . $row->pro_id ?>" title="Lien vers la fiche produit" class="waves-effect waves-light btn">Fiche Produit</a>
                             </td>
@@ -107,7 +109,7 @@
             </div>
             <div class="row">
                 <div class="col s12">
-                    <a href="<?= site_url('Produits/addProduct') ?>" class="waves-effect waves-light btn" title="Lien vers ajout d'un produit" target="_blank">Ajouter un produit</a>
+                    <a href="<?= site_url('Produits/addProduct') ?>" class="waves-effect waves-light btn" title="Lien vers ajout d'un produit">Ajouter un produit</a>
                 </div>
             </div>
         </div> 

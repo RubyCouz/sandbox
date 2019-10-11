@@ -7,7 +7,10 @@
             $total = 0;
             ?>
             <div class="row">
-                <div class="col s3">
+                <div class="col s1">
+
+                </div>
+                <div class="col s2">
                     <p>Produits</p>
                 </div>
                 <div class="col s3">
@@ -22,7 +25,10 @@
             {
                 ?>
                 <div class="row" id="<?= $prod['pro_id'] ?>">
-                    <div class="col s3">
+                    <div class="col s1">
+                        <img src="<?= base_url('assets/img/' . $prod['pro_id'] . '.' . $prod['pro_photo']) ?>" alt="" class="circle responsive-img" title="Photo d'un article" alt="Photo de <?= $prod['pro_libelle'] ?>">
+                    </div>
+                    <div class="col s2">
                         <p><?= $prod['pro_libelle'] ?></p>
                     </div>
                     <div class="col s1">

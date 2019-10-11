@@ -19,7 +19,7 @@ class Prod_model extends CI_model {
         //appel de la methode database -> permet la connexion à la base de données.
         $this->load->database();
         // requète select
-        $this->db->select('*');
+        $this->db->select('*, DATE_FORMAT(`pro_d_ajout`, \'%d/%m/%Y\') as add_date, DATE_FORMAT(`pro_d_modif`, \'%d/%m/%Y\') as update_date ');
         $this->db->from('produits');
         $this->db->limit($limit, $page);
         // exécution de la requète
@@ -68,12 +68,12 @@ class Prod_model extends CI_model {
         $file = $this->upload->data();
         $data = $this->input->post();
 // récupération de l'extensio du fichier en vue de son insertion en base de données et extraction du '.' (codeigniter garde le point avant l'extension)
-        if ($this->upload->do_upload("pro_photo"))
+        if ($this->upload->do_upload('pro_photo'))
         {
-            $data["pro_photo"] = substr($file["file_ext"], 1);
+            $data['pro_photo'] = substr($file['file_ext'], 1);
         }
         // récupération et formatage de la date (date courante) d'ajout du produit
-        $data["pro_d_modif"] = date("Y-m-d");
+        $data['pro_d_modif'] = date("Y-m-d");
         $this->db->where('pro_id', $id);
         $this->db->update('produits', $data);
     }
